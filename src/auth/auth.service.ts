@@ -391,4 +391,20 @@ export class AuthService {
       throw new BadRequestException('Error al obtener usuarios: ' + error.message);
     }
   }
+
+  async clearTestData() {
+    try {
+      // Use TRUNCATE CASCADE to handle foreign key constraints
+      // This will also clear students, teachers, admins due to table inheritance
+      await this.userRepository.query('TRUNCATE TABLE "user" CASCADE');
+      
+      return {
+        success: true,
+        message: 'All test data cleared successfully',
+        timestamp: new Date().toISOString(),
+      };
+    } catch (error) {
+      throw new BadRequestException('Error clearing test data: ' + error.message);
+    }
+  }
 }

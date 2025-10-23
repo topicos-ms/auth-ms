@@ -84,4 +84,9 @@ export class AuthController {
   validateToken(@Payload() payload: { token: string }) {
     return this.authService.validateToken(payload.token);
   }
+
+  @MessagePattern('auth.clearTestData')
+  clearTestData() {
+    return this.authService.clearTestData();
+  }
 }
